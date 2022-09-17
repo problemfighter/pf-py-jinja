@@ -14,7 +14,11 @@ class TemplateManager:
         file_loader = FileSystemLoader(template_path)
         self._environment = Environment(loader=file_loader)
 
+    def add_global_variables(self, template):
+        template.globals['show_year'] = datetime.datetime.today().year
+        return template
+
     def resolve(self, template_name, data):
         template = self._environment.get_template(template_name)
-        template.globals['show_year'] = datetime.datetime.today().year
+        template = self.add_global_variables(template)
         return template.render(data=data)
