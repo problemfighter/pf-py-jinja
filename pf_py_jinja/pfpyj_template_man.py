@@ -1,5 +1,4 @@
 import datetime
-
 from jinja2 import Template, Environment, FileSystemLoader
 
 
@@ -18,7 +17,11 @@ class TemplateManager:
         template.globals['show_year'] = datetime.datetime.today().year
         return template
 
-    def resolve(self, template_name, data):
+    def get_template(self, template_name) -> Template:
         template = self._environment.get_template(template_name)
         template = self.add_global_variables(template)
+        return template
+
+    def resolve(self, template_name, data):
+        template = self.get_template(template_name)
         return template.render(data=data)
