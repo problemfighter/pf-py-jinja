@@ -13,6 +13,10 @@ class TemplateManager:
         file_loader = FileSystemLoader(template_path)
         self._environment = Environment(loader=file_loader)
 
+    def set_extension(self, extensions):
+        for extension in extensions:
+            self._environment.add_extension(extension)
+
     def add_global_variables(self, template):
         template.globals['show_year'] = datetime.datetime.today().year
         return template
